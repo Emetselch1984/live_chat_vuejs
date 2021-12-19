@@ -1,22 +1,24 @@
 <template>
-  <h1>
-    Welcomeページ
-  </h1>
-  <section>
-    <h2>{{title}}</h2>
+  <div class="container">
+    <h1>
+      Welcomeページ
+    </h1>
     <section>
-      <h3>{{subtitle}}</h3>
-      <p v-if=isEnabled>{{3 + 3}}</p>
-      <button v-on:click="toggle">トグルする</button>
-      <TestComponent message="Welcomeから渡されたデータです" @toggle="toggle"/>
-      <TestComponent :propsNameIsEnabled="isEnabled" @toggle="toggle" >
-        <p v-if="isEnabled">こんにちは</p>
-      </TestComponent>
+      <h2>{{title}}</h2>
+      <section>
+        <h3>{{subtitle}}</h3>
+        <p v-if=isEnabled>{{3 + 3}}</p>
+        <button v-on:click="toggle">トグルする</button>
+        <TestComponent message="Welcomeから渡されたデータです" @toggle="toggle"/>
+        <TestComponent :propsNameIsEnabled="isEnabled" @toggle="toggle" >
+          <p v-if="isEnabled">こんにちは</p>
+        </TestComponent>
+      </section>
+      <section>
+        <p>{{ text }}</p>
+      </section>
     </section>
-    <section>
-      <p>{{ text }}</p>
-    </section>
-  </section>
+  </div>
 </template>
 
 <script>
