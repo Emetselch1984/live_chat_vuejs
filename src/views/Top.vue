@@ -5,7 +5,7 @@
         <h1>ようこそ</h1>
         <section>
           <div v-if="shouldShowLoginForm">
-            <LoginForm />
+            <LoginForm @redirectToChatRoom="redirectToChatRoom"/>
             <p>初めての方は<span @click="shouldShowLoginForm = false">こちら</span>をクリック</p>
           </div>
         </section>
@@ -28,6 +28,11 @@ export default {
     return {
       shouldShowLoginForm: true
     }
+  },
+  methods: {
+    redirectToChatRoom(){
+      this.$router.push({name: 'ChatRoom'})
+    },
   }
 }
 
