@@ -8,6 +8,10 @@
       <h3>{{subtitle}}</h3>
       <p v-if=isEnabled>{{3 + 3}}</p>
       <button v-on:click="toggle">トグルする</button>
+      <TestComponent message="Welcomeから渡されたデータです" @toggle="toggle"/>
+      <TestComponent :propsNameIsEnabled="isEnabled" @toggle="toggle" >
+        <p v-if="isEnabled">こんにちは</p>
+      </TestComponent>
     </section>
     <section>
       <p>{{ text }}</p>
@@ -16,7 +20,9 @@
 </template>
 
 <script>
+import TestComponent from "../components/TestComponent";
 export default {
+  components: {TestComponent},
   data(){
     return {
       title: "初めてのVueアプリ",
