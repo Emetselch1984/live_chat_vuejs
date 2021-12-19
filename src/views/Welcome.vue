@@ -9,6 +9,9 @@
       <p v-if=isEnabled>{{3 + 3}}</p>
       <button v-on:click="toggle">トグルする</button>
     </section>
+    <section>
+      <p>{{ text }}</p>
+    </section>
   </section>
 </template>
 
@@ -21,6 +24,17 @@ export default {
       isEnabled: false
     }
   },
+  // 一度算出プロパティで計算をすると、もう一度メソッドを呼び出した場合でも、
+  // 依存しているデータに変更がされない限りキャッシュを返すという特性があります。
+  computed: {
+    text () {
+      if (this.isEnabled) {
+        return 'こんにちは！'
+      } else {
+        return 'さよなら！'
+      }
+    }
+  },
   methods: {
     toggle(){
       this.isEnabled = !this.isEnabled
@@ -28,4 +42,3 @@ export default {
   }
 }
 </script>
-
