@@ -1,6 +1,8 @@
 <template>
   <h2>アカウントを登録</h2>
-  <form>
+<!--  @submitはデフォルトでは送信すると画面がリロードされる。-->
+<!--  これを防ぐ-->
+  <form @submit.prevent="signUp">
     <input type="text" required placeholder="名前" v-model="name">
     <input type="email" required placeholder="メールアドレス" v-model="email">
     <input type="password" required placeholder="パスワード" v-model="password">
@@ -17,6 +19,11 @@ export default {
       email: '',
       password: '',
       passwordConfirmation: ''
+    }
+  },
+  methods: {
+    async signUp (){
+      console.log(this.name,this.email)
     }
   }
 }
