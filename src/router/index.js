@@ -4,7 +4,7 @@ import Top from '../views/Top'
 import ChatRoom from "../views/ChatRoom";
 import useValidate from '../auth/validate'
 
-const {validate} = useValidate()
+const {error,validate} = useValidate()
 const requireAuth = async (to, from, next) => {
   console.log('requireAuthが呼ばれています！')
   const uid = window.localStorage.getItem('uid')
@@ -18,6 +18,12 @@ const requireAuth = async (to, from, next) => {
   }
 
   await validate()
+  if (error.value) {
+    console.log('認証に失敗しました')
+    next({ name: 'Top' })
+  } else {
+    next()
+  }
 
   next()
 }
