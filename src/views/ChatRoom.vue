@@ -14,6 +14,7 @@ import Navbar from "../components/Navbar";
 import ChatWindow from "../components/ChatWindow";
 import NewChatForm from "../components/NewChatForm";
 import axios from 'axios'
+import ActionCable from 'actioncable'
 export default {
   components: {ChatWindow, Navbar,NewChatForm},
   data(){
