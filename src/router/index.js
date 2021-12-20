@@ -27,6 +27,27 @@ const requireAuth = async (to, from, next) => {
 
   next()
 }
+const noRequireAuth = async (to, from, next) => {
+  console.log('noRequireAuthが呼ばれています！')
+  const uid = window.localStorage.getItem('uid')
+  const client = window.localStorage.getItem('client')
+  const accessToken = window.localStorage.getItem('access-token')
+
+  if (!uid && !client && !accessToken) {
+    next()
+    return
+  }
+
+  await validate()
+  if (!error.value) {
+    console.log('ログインしているのでチャットルームにリダイレクトします')
+    next({ name: 'ChatRoom' })
+  } else {
+    next()
+  }
+
+  next()
+}
 const routes = [
   {
     path: '/welcome',
@@ -36,7 +57,8 @@ const routes = [
   {
     path: '/',
     name: "Top",
-    component: Top
+    component: Top,
+    beforeEnter: noRequireAuth
   },
   {
     path: '/chatroom',

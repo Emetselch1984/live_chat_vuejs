@@ -5,6 +5,7 @@ import axios from "axios";
 // vue3から生まれたComposition APIの機能の一つ
 // errorが読み込まれると検知する
 import { ref } from 'vue'
+// nullはオブジェクトとなり、valueプロパティで参照できる
 const error = ref(null)
 
 const validate = async () => {
