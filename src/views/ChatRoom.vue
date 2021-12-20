@@ -3,7 +3,7 @@
     <div class="container">
       <Navbar/>
       <ChatWindow :messages="messages"/>
-      <NewChatForm/>
+      <NewChatForm @connectCable="connectCable"/>
     </div>
   </section>
 
@@ -39,10 +39,28 @@ export default {
       }catch (error) {
         console.log(error)
       }
-    }
+    },
+    connectCable(message){
+      this.messageChannel.perform('receive', {
+        message: message,
+        email: window.localStorage.getItem('uid')
+      })
+    },
   },
   mounted() {
-    this.getMessages()
+    const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+    this.messageChannel = cable.subscriptions.create('RoomChannel', {
+      connected: () => {
+        this.getMessages()
+      },
+      received: () => {
+        this.getMessages()
+      }
+    })
+  },
+  // ブラウザを閉じたり、インスタンスが削除され前に実行されるメソッド
+  beforeUnmount () {
+    this.messageChannel.unsubscribe()
   }
 }
 </script>
