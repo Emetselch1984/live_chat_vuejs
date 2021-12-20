@@ -3,6 +3,7 @@
     <div class="container">
       <Navbar/>
       <ChatWindow :messages="messages"/>
+      <NewChatForm/>
     </div>
   </section>
 
@@ -11,9 +12,10 @@
 <script>
 import Navbar from "../components/Navbar";
 import ChatWindow from "../components/ChatWindow";
+import NewChatForm from "../components/NewChatForm";
 import axios from 'axios'
 export default {
-  components: {ChatWindow, Navbar},
+  components: {ChatWindow, Navbar,NewChatForm},
   data(){
     return {
       messages: [],
