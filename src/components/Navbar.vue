@@ -9,6 +9,7 @@
 </template>
 <script>
 import axios from 'axios'
+// import removeItem from '../auth/removeItem'
 export default {
   data(){
     return {
@@ -27,7 +28,12 @@ export default {
             client: window.localStorage.getItem('client')
           }
         })
-        console.log(res)
+        console.log("ログアウトしました")
+        window.localStorage.removeItem('access-token')
+        window.localStorage.removeItem('client')
+        window.localStorage.removeItem('uid')
+        window.localStorage.removeItem('name')
+        this.$router.push({ name: 'Top' })
         return res
       }
       catch (error){
