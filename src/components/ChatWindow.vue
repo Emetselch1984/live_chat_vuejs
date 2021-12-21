@@ -133,5 +133,12 @@ ul li {
 .heart-count {
   color: rgb(20, 19, 19);
 }
+.received .message::selection {
+  background: #eee;
+}
+
+.sent .message::selection {
+  background: #677bb4;
+}
 </style>
 
