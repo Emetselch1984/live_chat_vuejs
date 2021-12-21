@@ -2,7 +2,7 @@
   <section>
     <div class="container">
       <Navbar/>
-      <ChatWindow :messages="messages"/>
+      <ChatWindow @connectCable="connectCable" :messages="formattedMessages" ref="chatWindow"/>
       <NewChatForm @connectCable="connectCable"/>
     </div>
   </section>
@@ -13,6 +13,8 @@
 import Navbar from "../components/Navbar";
 import ChatWindow from "../components/ChatWindow";
 import NewChatForm from "../components/NewChatForm";
+import { formatDistanceToNow } from 'date-fns'
+import { ja } from 'date-fns/locale'
 import axios from 'axios'
 import ActionCable from 'actioncable'
 export default {
@@ -20,6 +22,15 @@ export default {
   data(){
     return {
       messages: [],
+    }
+  },
+  computed: {
+    formattedMessages () {
+      if (!this.messages.length) { return [] }
+      return this.messages.map(message => {
+        let time = formatDistanceToNow(new Date(message.created_at), { locale: ja })
+        return { ...message, created_at: time }
+      })
     }
   },
   methods: {
@@ -51,10 +62,14 @@ export default {
     const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
     this.messageChannel = cable.subscriptions.create('RoomChannel', {
       connected: () => {
-        this.getMessages()
+        this.getMessages().then(() => {
+          this.$refs.chatWindow.scrollToBottom()
+        })
       },
       received: () => {
-        this.getMessages()
+        this.getMessages().then(() => {
+          this.$refs.chatWindow.scrollToBottom()
+        })
       }
     })
   },
